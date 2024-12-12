@@ -1,5 +1,170 @@
 import ply.lex as lex
 import ply.yacc as yacc
+import json
+import os 
+
+#-----------------------------constants-----------------------------
+path = r'C:\Users\DELL\Desktop\S7\compilation\proj\songCompiler\errorLog.json'
+#dictionary
+dataDic = {
+    "lexical_error": [],
+    "syntactic_error": [],
+    "semantic_error": []
+}
+dataTemplate = {
+        "Type": "",
+        "Description": "",
+        "Position": "",
+        "Line":""
+   
+}
+
+#song dictionary
+correctLyrics = [
+    "One love, one heart.",
+    "Let's join together and feel alright.",
+    "One love (oh Lord of mercy).",
+    "One heart (I tell you).",
+    "Let's join together (at this house I pray).",
+    "And feel alright (and I will feel alright).",
+    "Let's join together and feel alright.",
+    "let them all pass all their dirty remarks (one love).",
+    "There is one question I'd really like to ask (one soul).",
+    "Is there a place for the hopeless sinner.",
+    "Who has hurt all mankind just to save his own.",
+    "One love, one heart."
+    "Let's join together and feel alright.",
+    "One love (hear my plea).",
+    "One heart.",
+    "Let's join together and feel alright.",
+    "Let's join together (let's just trust in the Lord).",
+    "And feel alright (and I will feel alright).",
+    "Let's join together to fight this holy battle.",
+    "So when the man comes there will be no no doom.",
+    "Have pity on those whose chances grows thinner.",
+    "There ain't no hiding place among the kingdoms of love yes.",
+    "One love (hear my plea).",
+    "One heart (oh).",
+    "Let's join together and feel alright.",
+    "One love (oh Lord of mercy).",
+    "One heart (I tell you)",
+    "Let's join together (let this house a pray).",
+    "And feel alright (and I will feel alright).",
+    "Let's join together and feel alright.",
+    "One love, one heart.",
+    "Let's join together and feel alright.",
+    "One love (oh Lord).",
+    "One heart (oh Lord).",
+    "Let's join together and feel alright.",
+    "Let's join together (let's all pray to the Lord).",
+    "And feel alright (and I will feel alright).",
+    "I tell you let them all pass all their dirty remarks (one love).",
+    "There is one question i'd really like to ask (one soul).",
+    "Is there a place for the hopeless sinner.",
+    "Who has hurt all mankind just to save his own.",
+    "One love (oh Lord of mercy).",
+    "One heart (I tell you).",
+    "Let's join together (at this house a pray).",
+    "And feel alright (and I will feel alright).",
+    "One love (hear my plea).",
+    "One heart (hear my plea).",
+    "Let's join together and feel alright (and I will feel alright).",
+    "Let's join together (let's pray to the Lord).",
+    "And feel alright (and I will feel alright)."
+
+]
+
+data = """One love, one heart.
+Let's join together and feel alright.
+One love (oh Lord of mercy).
+One heart (I tell you).
+Let's join together (at this house I pray).
+And feel alright (and I will feel alright).
+Let's join together and feel alright.
+let them all pass all their dirty remarks (one love).
+There is one question I'd really like to ask (one soul).
+Is there a place for the hopeless sinner.
+Who has hurt all mankind just to save his own.
+One love, one heart.
+Let's join together and feel alright.
+One love (hear my plea).
+One heart.
+Let's join together and feel alright.
+Let's join together (let's just trust in the Lord).
+And feel alright (and I will feel alright).
+Let's join together to fight this holy battle.
+So when the man comes there will be no no doom.
+Have pity on those whose chances grows thinner.
+There ain't no hiding place among the kingdoms of love yes.
+One love (hear my plea).
+One heart (oh).
+Let's join together and feel alright.
+One love (oh Lord of mercy).
+One heart (I tell you).
+Let's join together (let this house a pray).
+And feel alright (and I will feel alright).
+Let's join together and feel alright.
+One love, one heart.
+Let's join together and feel alright.
+One love (oh Lord).
+One heart (oh Lord).
+Let's join together and feel alright.
+Let's join together (let's all pray to the Lord).
+And feel alright (and I will feel alright).
+I tell you let them all pass all their dirty remarks (one love).
+There is one question i'd really like to ask (one soul).
+Is there a place for the hopeless sinner.
+Who has hurt all mankind just to save his own.
+One love (oh Lord of mercy).
+One heart (I tell you).
+Let's join together (at this house a pray).
+And feel alright (and I will feel alright).
+One love (hear my plea).
+One heart (hear my plea).
+Let's join together and feel alright (and I will feel alright).
+Let's join together (let's pray to the Lord).
+And feel alright (and I will feel alright).
+"""  
+
+
+#error log
+#creating a json file :
+
+def writeJson(data, filename=path):
+    # Check if the file exists in our file system using the library "os"
+    if os.path.exists(filename): 
+        # Read existing data
+        with open(filename, 'r') as f:
+            try:
+                existing_data = json.load(f) #storing the existing data in the json file in a list called existing_data
+            except json.JSONDecodeError:
+                existing_data = {"lexical_error": [], "syntactic_error": [], "semantic_error": []}
+    else:
+        existing_data = {"lexical_error": [], "syntactic_error": [], "semantic_error": []}
+    
+    # Merge new data with existing data
+    for key in data:
+        existing_data[key].extend(data[key]) #appending the new error in the existing_data list
+    
+    # Write the merged data back to the file
+    with open(filename, 'w') as f:
+        json.dump(existing_data, f, indent=4) #updating the json file
+
+#function for storing the errors in the dictionaries defined before
+def errorLog(error_type, description, line=None, position=None):
+    errorEntry = dataTemplate.copy()
+    errorEntry["Type"] = error_type
+    errorEntry["Description"] = description
+    errorEntry["Line"] = line
+    errorEntry["Position"] = position
+
+    if error_type == "lexical":
+        dataDic["lexical_error"].append(errorEntry)
+    elif error_type == "syntactic":
+        dataDic["syntactic_error"].append(errorEntry)
+    elif error_type == "semantic":
+        dataDic["semantic_error"].append(errorEntry)
+
 
 # Define the tokens and grammar rules
 tokens = (
@@ -36,7 +201,10 @@ t_RPAREN = r"\)"
 
 # Error handling for illegal characters
 def t_error(t):
-    print(f"Illegal character '{t.value[0]}' at line {t.lineno}")
+    error_message = f"Illegal character '{t.value[0]}' at line {t.lineno}"
+    errorLog("lexical", error_message, t.lineno, t.lexpos)
+    writeJson(dataDic)
+    raise Exception(f"ERROR: '{error_message}'")
     t.lexer.skip(1)
 
 # Newline handling to track line numbers
@@ -48,57 +216,7 @@ def t_newline(t):
 def lexicalAnalysis():
     print("-----------------------------Lexical analysis-----------------------------")
     lexer = lex.lex()  # Create the lexer
-    data = """One love, one heart.
-Let's join together and feel alright.
-One love (oh Lord of mercy).
-One heart (I tell you).
-Let's join together (at this house I pray).
-And feel alright (and I will feel alright).
-Let's join together and feel alright.
-let them all pass all their dirty remarks (one love).
-There is one question I'd really like to ask (one soul).
-Is there a place for the hopeless sinner.
-Who has hurt all mankind just to save his own.
-One love, one heart.
-Let's join together and feel alright.
-One love (hear my plea).
-One heart.
-Let's join together and feel alright.
-Let's join together (let's just trust in the Lord).
-And feel alright (and I will feel alright).
-Let's join together to fight this holy battle.
-So when the man comes there will be no no doom.
-Have pity on those whose chances grows thinner.
-There ain't no hiding place among the kingdoms of love yes.
-One love (hear my plea).
-One heart (oh).
-Let's join together and feel alright.
-One love (oh Lord of mercy) .
-One heart (I tell you).
-Let's join together (let this house a pray).
-And feel alright (and I will feel alright).
-Let's join together and feel alright.
-One love, one heart.
-Let's join together and feel alright.
-One love (oh Lord).
-One heart (oh Lord).
-Let's join together and feel alright.
-Let's join together (let's all pray to the Lord).
-And feel alright (and I will feel alright).
-I tell you let them all pass all their dirty remarks (one love).
-There is one question i'd really like to ask (one soul).
-Is there a place for the hopeless sinner.
-Who has hurt all mankind just to save his own.
-One love (oh Lord of mercy).
-One heart (I tell you).
-Let's join together (at this house I pray).
-And feel alright (and I will feel alright).
-One love (hear my plea).
-One heart (hear my plea).
-Let's join together and feel alright (and I will feel alright).
-Let's join together (let's pray to the Lord).
-And feel alright (and I will feel alright).
-"""  # Example input (You can modify this)
+    
     lexer.input(data.lower())  # Process input string
 
     tokens_list = []
@@ -108,7 +226,7 @@ And feel alright (and I will feel alright).
             print(f"Token: {tok.type}, Value: {tok.value}")
         return tokens_list  # Return the list of tokens
     except Exception as e:
-        print(f"Lexical analysis error: {e}")
+        print(f"{e}")
         return None
 
 # Grammar rule for "S" (sentence)
@@ -136,6 +254,7 @@ def p_S(p):
       | VP VP VP ADJP LPAREN ADVP RPAREN PUNCTUATION
       | VP CP LPAREN CONJUNCTIONS VP RPAREN PUNCTUATION
       | VP LPAREN VERBS VERBS PP RPAREN PUNCTUATION
+      | VP LPAREN PP RPAREN 
       
        
     '''
@@ -194,9 +313,9 @@ def p_PP(p):
        | PREPOSITIONS PRONOUNS PRONOUNS NOUNS
        | PREPOSITIONS ARTICLES NOUNS PREPOSITIONS NOUNS DETERMINANT
        | PREPOSITIONS ARTICLES NOUNS
-
-       
+       | PREPOSITIONS NP ARTICLES VERBS
     '''
+    #i added the last one 
     print(f"Rule matched: PP → {p[1:]}")
 
 def p_CP(p):
@@ -223,9 +342,15 @@ def p_ADJP(p):
 # Error handling for parsing
 def p_error(p):
     if p:
-        print(f"Syntax error at token '{p.type}' with value '{p.value}'")
+        error_message = f"Syntax error at token '{p.type}' with value '{p.value}'"
+        errorLog("syntactic", error_message, p.lineno, p.lexpos)
+        writeJson(dataDic)
+        raise Exception(error_message)
     else:
-        print("Syntax error at EOF (end of file)")
+        error_message = "Syntax error at EOF (end of file)"
+        errorLog("syntactic", error_message)
+        writeJson(dataDic)
+        raise Exception(error_message)
 
 # Modified function to process the input line by line
 def process_lines(tokens_list):
@@ -240,9 +365,36 @@ def process_lines(tokens_list):
             try:
                 parser.parse(raw_input)
                 print(f"Successfully processed line: {raw_input}")
+                results = semanticAnalysis()
+                for result in results:
+                    print(result)
             except Exception as e:
                 print(f"Syntax error: {e}")
             current_line = []  # Reset for the next line
+
+#semantic analysis
+def semanticAnalysis(input_user=data, correctLyrics=correctLyrics):
+    print("-----------------------------Semantic analysis-----------------------------")
+    inputLines = input_user.strip().split("\n")  # Divise l'entrée utilisateur en lignes
+    resultat = []
+    # Recherche chaque ligne de l'utilisateur dans les paroles correctes
+    for userLine in inputLines:
+        userLine = userLine.strip()  # Supprime les espaces inutiles
+        trouve = False
+        for correctLine in correctLyrics:
+            if userLine in correctLine:  # Correspondance partielle
+                resultat.append(f"Found : '{userLine}' in '{correctLine}'")
+                trouve = True
+                break
+        if not trouve:
+            message = f"Not found : '{userLine}' does not align with the song's lyrics"
+            errorLog("semantic", message)
+            writeJson(dataDic)
+            resultat.append(message)
+    
+    return resultat
+
+
 
 # Main function
 def main():
@@ -252,6 +404,8 @@ def main():
         process_lines(tokens_list)  # Process the tokens line by line
     else:
         print("Error in lexical analysis. Syntactic analysis will not be performed.")
+    
+    
 
 # Entry point
 if __name__ == "__main__":
