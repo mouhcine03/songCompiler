@@ -1,10 +1,12 @@
+from googletrans import Translator
 import ply.lex as lex
 import ply.yacc as yacc
 import json
 import os 
 
+
 #-----------------------------constants-----------------------------
-path = r'C:\Users\DELL\Desktop\S7\compilation\proj\songCompiler\errorLog.json'
+path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #dictionary
 dataDic = {
     "lexical_error": [],
@@ -80,50 +82,7 @@ One love (oh Lord of mercy).
 One heart (I tell you).
 Let's join together (at this house I pray).
 And feel alright (and I will feel alright).
-Let's join together and feel alright.
-let them all pass all their dirty remarks (one love).
-There is one question I'd really like to ask (one soul).
-Is there a place for the hopeless sinner.
-Who has hurt all mankind just to save his own.
-One love, one heart.
-Let's join together and feel alright.
-One love (hear my plea).
-One heart.
-Let's join together and feel alright.
-Let's join together (let's just trust in the Lord).
-And feel alright (and I will feel alright).
-Let's join together to fight this holy battle.
-So when the man comes there will be no no doom.
-Have pity on those whose chances grows thinner.
-There ain't no hiding place among the kingdoms of love yes.
-One love (hear my plea).
-One heart (oh).
-Let's join together and feel alright.
-One love (oh Lord of mercy).
-One heart (I tell you).
-Let's join together (let this house a pray).
-And feel alright (and I will feel alright).
-Let's join together and feel alright.
-One love, one heart.
-Let's join together and feel alright.
-One love (oh Lord).
-One heart (oh Lord).
-Let's join together and feel alright.
-Let's join together (let's all pray to the Lord).
-And feel alright (and I will feel alright).
-I tell you let them all pass all their dirty remarks (one love).
-There is one question i'd really like to ask (one soul).
-Is there a place for the hopeless sinner.
-Who has hurt all mankind just to save his own.
-One love (oh Lord of mercy).
-One heart (I tell you).
-Let's join together (at this house a pray).
-And feel alright (and I will feel alright).
-One love (hear my plea).
-One heart (hear my plea).
-Let's join together and feel alright (and I will feel alright).
-Let's join together (let's pray to the Lord).
-And feel alright (and I will feel alright).
+
 """  
 
 
@@ -352,7 +311,6 @@ def p_error(p):
         writeJson(dataDic)
         raise Exception(error_message)
 
-# Modified function to process the input line by line
 def process_lines(tokens_list):
     parser = yacc.yacc()  # Create the parser
     current_line = []
@@ -365,12 +323,25 @@ def process_lines(tokens_list):
             try:
                 parser.parse(raw_input)
                 print(f"Successfully processed line: {raw_input}")
-                results = semanticAnalysis()
-                for result in results:
-                    print(result)
             except Exception as e:
                 print(f"Syntax error: {e}")
+            
+            # Appel de l'analyse sémantique
+            results = semanticAnalysis(input_user=raw_input)
+            for result in results:
+                print(result)
+            
+            # Traduction du texte après les analyses
+            translations = translate_texts(raw_input)
+            if translations:
+                print(f"Translated line (French): {translations['fr']}")
+                print(f"Translated line (Spanish): {translations['es']}")
+                print(f"Translated line (italien): {translations['it']}")
+                
             current_line = []  # Reset for the next line
+
+
+
 
 #semantic analysis
 def semanticAnalysis(input_user=data, correctLyrics=correctLyrics):
@@ -393,6 +364,22 @@ def semanticAnalysis(input_user=data, correctLyrics=correctLyrics):
             resultat.append(message)
     
     return resultat
+
+from googletrans import Translator
+
+# Fonction pour traduire vers plusieurs langues
+def translate_texts(text, target_languages=['it', 'fr', 'es']):
+    translator = Translator()
+    translations = {}
+    for lang in target_languages:
+        try:
+            translation = translator.translate(text, dest=lang)
+            translations[lang] = translation.text
+        except Exception as e:
+            print(f"Translation error for {lang}: {e}")
+            translations[lang] = None
+    return translations
+
 
 
 
