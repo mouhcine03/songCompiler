@@ -6,7 +6,10 @@ import os
 
 
 #-----------------------------constants-----------------------------
-path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
+#Rihab
+path = r'C:\Users\DELL\Desktop\S7\compilation\songCompiler\errorLog.json'
+#Mohcine
+#path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #dictionary
 dataDic = {
     "lexical_error": [],
@@ -21,68 +24,9 @@ dataTemplate = {
    
 }
 
-#song dictionary
-correctLyrics = [
-    "One love, one heart.",
-    "Let's join together and feel alright.",
-    "One love (oh Lord of mercy).",
-    "One heart (I tell you).",
-    "Let's join together (at this house I pray).",
-    "And feel alright (and I will feel alright).",
-    "Let's join together and feel alright.",
-    "let them all pass all their dirty remarks (one love).",
-    "There is one question I'd really like to ask (one soul).",
-    "Is there a place for the hopeless sinner.",
-    "Who has hurt all mankind just to save his own.",
-    "One love, one heart."
-    "Let's join together and feel alright.",
-    "One love (hear my plea).",
-    "One heart.",
-    "Let's join together and feel alright.",
-    "Let's join together (let's just trust in the Lord).",
-    "And feel alright (and I will feel alright).",
-    "Let's join together to fight this holy battle.",
-    "So when the man comes there will be no no doom.",
-    "Have pity on those whose chances grows thinner.",
-    "There ain't no hiding place among the kingdoms of love yes.",
-    "One love (hear my plea).",
-    "One heart (oh).",
-    "Let's join together and feel alright.",
-    "One love (oh Lord of mercy).",
-    "One heart (I tell you)",
-    "Let's join together (let this house a pray).",
-    "And feel alright (and I will feel alright).",
-    "Let's join together and feel alright.",
-    "One love, one heart.",
-    "Let's join together and feel alright.",
-    "One love (oh Lord).",
-    "One heart (oh Lord).",
-    "Let's join together and feel alright.",
-    "Let's join together (let's all pray to the Lord).",
-    "And feel alright (and I will feel alright).",
-    "I tell you let them all pass all their dirty remarks (one love).",
-    "There is one question i'd really like to ask (one soul).",
-    "Is there a place for the hopeless sinner.",
-    "Who has hurt all mankind just to save his own.",
-    "One love (oh Lord of mercy).",
-    "One heart (I tell you).",
-    "Let's join together (at this house a pray).",
-    "And feel alright (and I will feel alright).",
-    "One love (hear my plea).",
-    "One heart (hear my plea).",
-    "Let's join together and feel alright (and I will feel alright).",
-    "Let's join together (let's pray to the Lord).",
-    "And feel alright (and I will feel alright)."
 
-]
 
-data = """One love, one heart.
-Let's join together and feel alright.
-One love (oh Lord of mercy).
-One heart (I tell you).
-Let's join together (at this house I pray).
-And feel alright (and I will feel alright).
-
+data = """one lord, one heart.
 """  
 
 
@@ -214,10 +158,65 @@ def p_S(p):
       | VP CP LPAREN CONJUNCTIONS VP RPAREN PUNCTUATION
       | VP LPAREN VERBS VERBS PP RPAREN PUNCTUATION
       | VP LPAREN PP RPAREN 
-      
-       
     '''
     print(f"Rule matched: S → {p[1:]}")
+    if p[1] ==("one", "love") and p[2] == "," and p[3] == ("one", "heart"):
+        pass
+    elif p[1] == ("one", "heart"):
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == ("and",("feel","alright")):
+        pass
+    elif p[1] == ("one","love") and p[2] == "(" and p[3] == "oh" and p[4] == ("lord","of","mercy") and p[5] == ")":
+        pass
+    elif p[1] == ("one","heart") and p[2] == "(" and p[3] == ("i","tell","you") and p[4] == ")":
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == "(" and p[3] == ("at",("this","house"),("i","pray")) and p[4] == ")":
+        pass
+    elif p[1] == ("and",("feel","alright")) and p[2] == "(" and p[3] == ("and",("i","will","feel","alright")) and p[4] == ")":
+        pass
+    elif p[1] == ("let","them","all") and p[2] == ("pass","all") and p[3] == ("their","dirty","remarks") and p[4] == "(" and p[5] == ("one","love") and p[6] == ")":
+        pass
+    elif p[1] == ("there","is","one","question") and p[2] == ("i'd","really","like") and p[3] == ("to","ask") and p[4] == "(" and p[5] == ("one","soul") and p[6] == ")":
+        pass
+    elif p[1] == ("is","there") and p[2] == ("a","place") and p[3] == ("for",("the","hopeless","sinner")) :
+        pass
+    elif p[1] == ("who","has","hurt","all","mankind") and p[2] == ("just",("to","save")) and p[3] == ("his","own") :
+        pass
+    elif p[1] == ("one","love") and p[2] == "(" and p[3] == ("hear","my","plea") and p[4] == ")":
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == "(" and p[3] == ("let's","just","trust") and p[4] == ("in",("the","lord")) and p[5] == ")":
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == ("to","fight") and p[3] == ("this","holy","battle"):
+        pass
+    elif p[1] == ("so","when") and p[2] == ("the","man","comes","there","will","be","no") and p[3] == ("no","doom"):
+        pass
+    elif p[1] == ('have','pity',('on','those','whose','chances')) and p[2] == ('grows','thinner'):
+        pass
+    elif p[1] == ('there',"ain't",'no',"hiding","place") and p[2] == ("among","the","kingdoms","of","love","yes"):
+        pass
+    elif p[1] == ("one","heart") and p[2] == "(" and p[3] == "oh" and p[4] == ")":
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == "(" and p[3] == ("let","this","house","a","pray") and p[4] == ")":
+        pass
+    elif p[1] ==("one", "love") and p[2] == "(" and p[3] == "oh" and p[4] == "lord" and p[5] == ")":
+        pass
+    elif p[1] == ("one","heart") and p[2] == "(" and p[3] == "oh" and p[4] == "lord" and p[5] == ")":
+        pass
+    elif p[1] == ("let's", 'join', 'together') and p[2] == '(' and p[3] == ("let's", 'all', 'pray') and p[4] == ('to', ('the', 'lord')) and p[5] == ')':
+        pass
+    elif p[1] == ('i', 'tell', 'you') and p[2] == ('let', 'them', 'all') and p[3] == ('pass', 'all') and p[4] == ('their', 'dirty', 'remarks') and p[5] == '(' and p[6] == ('one', 'love') and p[7] == ")":
+        pass
+    elif p[1] == ("let's", 'join', 'together') and p[2] == "(" and p[3] == ('at', ('this', 'house'), 'a', 'pray') and p[4] == ")":
+        pass
+    elif p[1] == ('one', 'heart') and p[2] == "(" and p[3] == ('hear', 'my', 'plea') and p[4] == ")":
+        pass
+    elif p[1] == ("let's","join","together") and p[2] == "(" and p[3] == "let's" and p[4] == "pray" and p[5] == ('to', ('the', 'lord')) and p[6] == ")":
+        pass
+    else:
+        error_message = f"Semantic error S: check out the structure of your phrase."
+        print(f"{error_message}")
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 
 def p_ADVP(p):
     '''
@@ -227,11 +226,22 @@ def p_ADVP(p):
          | ADVERBS VERBS ADVERBS
          | ADVERBS VERBS ADVERBS NOUNS
          | ADVERBS PP
-         | ADVERBS VERBS DETERMINANT VERBS NOUNS 
-         
-         
+         | ADVERBS VERBS DETERMINANT VERBS NOUNS  
     '''
     print(f"Rule matched: ADVP → {p[1:]}")
+    if p[1] == "one" and p[2] == "love" or p[1] == "one" and p[2] == "heart" or p[1] == "one" and p[2] == "soul":
+        p[0] = (p[1],p[2])
+    elif p[1] == "there" and p[2] == "is" and p[3] == "one" and p[4] == "question":
+        p[0] = (p[1],p[2],p[3],p[4])
+    elif p[1] == "just" and p[2] == ("to","save"):
+        p[0] = (p[1],p[2])
+    elif p[1] == 'there' and p[2] == "ain't" and p[3] == 'no' and p[4] == "hiding" and p[5] == "place":
+        p[0] = (p[1],p[2],p[3],p[4],p[5])
+    else :
+        error_message = f"Semantic error ADVP: please check the structure of your phrase."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 
 def p_VP(p):
     '''
@@ -250,7 +260,47 @@ def p_VP(p):
        | VERBS PRONOUNS NOUNS ARTICLES VERBS 
         
     '''
+    
     print(f"Rule matched: VP → {p[1:]}")
+    if p[1] == "let's" and p[2] == "join" and p[3] == "together":
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "feel" and p[2] == "alright" :
+        p[0] = (p[1],p[2])
+    elif p[1] == "i" and p[2] == "tell" and p[3] == "you":
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "i" and p[2] == "pray":
+        p[0] = ("i","pray")
+    elif p[1] == "i" and p[2] == "will" and p[3] == "feel" and p[4] == "alright":
+        p[0] = (p[1],p[2],p[3],p[4])
+    elif p[1] == "let" and p[2] == "them" and p[3] == "all" :
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "pass" and p[2] == "all" :
+        p[0] = (p[1],p[2])
+    elif p[1] == "i'd" and p[2] == "really" and p[3] == "like" :
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "is" and p[2] == "there":
+        p[0] = (p[1],p[2])
+    elif p[1] == 'who'and p[2] == 'has' and p[3] == 'hurt' and p[4] == 'all' and p[5] == 'mankind':
+        p[0] = (p[1],p[2],p[3],p[4],p[5])
+    elif p[1] == "hear" and p[2] == "my" and p[3] == "plea" :
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "let's" and p[2] == "just" and p[3] == "trust" :
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "the" and p[2] == "man" and p[3] == "comes" and p[4] == "there" and p[5] == "will" and p[6] == "be" and p[7] == "no" :
+        p[0] = (p[1],p[2],p[3],p[4],p[5],p[6],p[7])
+    elif p[1] == "have" and p[2] == "pity" and p[3] == ("on","those","whose","chances"):
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "grows" and p[2] == "thinner":
+        p[0] = (p[1],p[2])
+    elif p[1] == 'let'and p[2] == 'this' and p[3] == 'house' and p[4] == 'a' and p[5] == "pray":
+        p[0] = (p[1],p[2],p[3],p[4],p[5])
+    elif p[1] == "let's" and p[2] == "all" and p[3] == "pray":
+        p[0] = (p[1],p[2],p[3])
+    else:
+        error_message = f"Semantic error VP: check out the structure of your phrase please."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 
 def p_NP(p):
     '''
@@ -261,6 +311,22 @@ def p_NP(p):
        
     '''
     print(f"Rule matched: NP → {p[1:]}")
+    if p[1] == "lord" and p[2] == "of" and p[3] == "mercy":
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "this" and p[2] == "house":
+        p [0] = ("this","house")
+    elif p[1] == "a" and p[2] == "place" :
+        p[0] = (p[1],p[2])
+    elif p[1] == "the" and p[2] == "lord":
+        p [0] = ("the","lord")
+    elif p[1] == "no" and p[2] == "doom":
+        p [0] = ("no","doom")
+    else:
+        error_message = f"Semantic error NP: check out the structure of your phrase please."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
+
 
 def p_PP(p):
     '''
@@ -276,7 +342,23 @@ def p_PP(p):
     '''
     #i added the last one 
     print(f"Rule matched: PP → {p[1:]}")
-
+    if p[1] == 'at' and p[2] == ("this","house") and p[3] == ("i","pray"):
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "to" and p[2] == "ask" or  p[1] == "for" and p[2] == ("the","hopeless","sinner") or p[1] == "to" and p[2] == "save" or p[1] == "in" and p[2] == ("the","lord") or p[1] == "to" and p[2] == "fight":
+        p[0] = (p[1],p[2])
+    elif p[1]=='on' and p[2] == 'those' and p[3] == 'whose' and p[4] == 'chances':
+        p[0] = (p[1],p[2],p[3],p[4])
+    elif p[1] == "among" and p[2] == "the" and p[3] == "kingdoms" and p[4] == "of" and p[5] == "love" and p[6] == "yes":
+        p[0] = (p[1],p[2],p[3],p[4],p[5],p[6])
+    elif p[1] == "to" and p[2] == ("the","lord"):
+        p[0] = (p[1],p[2])
+    elif p[1] == 'at' and p[2] == ("this","house") and p[3] == "a" and p[4] == "pray":
+        p[0] = (p[1],p[2],p[3],p[4])
+    else:
+        error_message = f"Semantic error PP: check out the structure of your phrase please."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 def p_CP(p):
     '''
     CP : CONJUNCTIONS VP 
@@ -284,6 +366,17 @@ def p_CP(p):
        
     '''
     print(f"Rule matched: CP → {p[1:]}")
+    if p[1] == "and" and p[2] == ("feel","alright"):
+        p[0] = (p[1],p[2])
+    elif p[1] == "and" and p[2] == ("i","will","feel","alright"):
+        p[0] = (p[1],p[2])
+    elif p[1] == "so" and p[2] == "when":
+        p[0] = (p[1],p[2])
+    else:
+        error_message = f"Semantic error CP: did you mean and feel alright."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 
 def p_ADJP(p):
     '''
@@ -294,7 +387,19 @@ def p_ADJP(p):
          | NOUNS ADJECTIVES 
     '''
     print(f"Rule matched: ADJP → {p[1:]}")
-
+    if p[1] == "their" and p[2] == "dirty" and p[3] == "remarks":
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "the" and p[2] == "hopeless" and p[3] == "sinner":
+        p[0] = (p[1],p[2],p[3])
+    elif p[1] == "his" and p[2] == "own":
+        p[0] = (p[1],p[2])
+    elif p[1] == "this" and p[2] == "holy" and p[3] == "battle" :
+        p[0] = (p[1],p[2],p[3])
+    else:
+        error_message = f"Semantic error ADJP: check out the structure of your phrase please."
+        print(f'{error_message}')
+        errorLog("semantic", error_message)
+        writeJson(dataDic)
 
 
 
@@ -325,13 +430,8 @@ def process_lines(tokens_list):
                 print(f"Successfully processed line: {raw_input}")
             except Exception as e:
                 print(f"Syntax error: {e}")
-            
-            # Appel de l'analyse sémantique
-            results = semanticAnalysis(input_user=raw_input)
-            for result in results:
-                print(result)
-            
-            # Traduction du texte après les analyses
+
+             #Traduction du texte après les analyses
             translations = translate_texts(raw_input)
             if translations:
                 print(f"Translated line (French): {translations['fr']}")
@@ -343,29 +443,7 @@ def process_lines(tokens_list):
 
 
 
-#semantic analysis
-def semanticAnalysis(input_user=data, correctLyrics=correctLyrics):
-    print("-----------------------------Semantic analysis-----------------------------")
-    inputLines = input_user.strip().split("\n")  # Divise l'entrée utilisateur en lignes
-    resultat = []
-    # Recherche chaque ligne de l'utilisateur dans les paroles correctes
-    for userLine in inputLines:
-        userLine = userLine.strip()  # Supprime les espaces inutiles
-        trouve = False
-        for correctLine in correctLyrics:
-            if userLine in correctLine:  # Correspondance partielle
-                resultat.append(f"Found : '{userLine}' in '{correctLine}'")
-                trouve = True
-                break
-        if not trouve:
-            message = f"Not found : '{userLine}' does not align with the song's lyrics"
-            errorLog("semantic", message)
-            writeJson(dataDic)
-            resultat.append(message)
-    
-    return resultat
 
-from googletrans import Translator
 
 # Fonction pour traduire vers plusieurs langues
 def translate_texts(text, target_languages=['it', 'fr', 'es']):
