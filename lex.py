@@ -1,4 +1,4 @@
-#from googletrans import Translator
+from googletrans import Translator
 import ply.lex as lex
 import ply.yacc as yacc
 import json
@@ -8,7 +8,7 @@ import re
 
 #-----------------------------constants-----------------------------
 #Rihab
-path = r'C:\Users\DELL\Desktop\S7\compilation\songCompiler\errorLog.json'
+path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #Mohcine
 #path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #dictionary

@@ -27,7 +27,7 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> S","S'",1,None,None,None),
-<<<<<<< HEAD
+
   ('S -> ADVP PUNCTUATION ADVP PUNCTUATION','S',4,'p_S','lex.py',194),
   ('S -> VP CP PUNCTUATION','S',3,'p_S','lex.py',195),
   ('S -> ADVP LPAREN INTERJECTIONS NP RPAREN PUNCTUATION','S',6,'p_S','lex.py',196),
@@ -91,7 +91,7 @@ _lr_productions = [
   ('ADJP -> DETERMINANT ADJECTIVES','ADJP',2,'p_ADJP','lex.py',292),
   ('ADJP -> PRONOUNS ADJECTIVES NOUNS','ADJP',3,'p_ADJP','lex.py',293),
   ('ADJP -> NOUNS ADJECTIVES','ADJP',2,'p_ADJP','lex.py',294),
-=======
+
   ('S -> ADVP PUNCTUATION ADVP PUNCTUATION','S',4,'p_S','lex.py',136),
   ('S -> VP CP PUNCTUATION','S',3,'p_S','lex.py',137),
   ('S -> ADVP LPAREN INTERJECTIONS NP RPAREN PUNCTUATION','S',6,'p_S','lex.py',138),
@@ -155,5 +155,5 @@ _lr_productions = [
   ('ADJP -> DETERMINANT ADJECTIVES','ADJP',2,'p_ADJP','lex.py',244),
   ('ADJP -> PRONOUNS ADJECTIVES NOUNS','ADJP',3,'p_ADJP','lex.py',245),
   ('ADJP -> NOUNS ADJECTIVES','ADJP',2,'p_ADJP','lex.py',246),
->>>>>>> d161996cd6a169ef71ecaea8f0a91e43d1017d1d
+
 ]
