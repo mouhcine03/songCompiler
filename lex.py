@@ -1,8 +1,9 @@
-from googletrans import Translator
+#from googletrans import Translator
 import ply.lex as lex
 import ply.yacc as yacc
 import json
 import os 
+import re
 
 
 #-----------------------------constants-----------------------------
@@ -26,8 +27,8 @@ dataTemplate = {
 
 
 
-data = """one lord, one heart.
-"""  
+#data = """one lord, one heart.
+#"""  
 
 
 #error log
@@ -119,9 +120,16 @@ def t_newline(t):
 def lexicalAnalysis():
     print("-----------------------------Lexical analysis-----------------------------")
     lexer = lex.lex()  # Create the lexer
-    
-    lexer.input(data.lower())  # Process input string
-
+    print("Please enter the lyrics you have in mind: ")
+    lines = []
+    while True:
+        line = input()  # Read one line at a time
+        if line == "":  # Stop input when the user enters an empty line
+            break
+        lines.append(line)
+    data = "\n".join(lines)
+    data = process_data(data)
+    lexer.input(data.lower())
     tokens_list = []
     try:
         for tok in lexer:
@@ -432,33 +440,42 @@ def process_lines(tokens_list):
                 print(f"Syntax error: {e}")
 
              #Traduction du texte après les analyses
-            translations = translate_texts(raw_input)
-            if translations:
-                print(f"Translated line (French): {translations['fr']}")
-                print(f"Translated line (Spanish): {translations['es']}")
-                print(f"Translated line (italien): {translations['it']}")
+            #translations = translate_texts(raw_input)
+            #if translations:
+            #    print(f"Translated line (French): {translations['fr']}")
+            #    print(f"Translated line (Spanish): {translations['es']}")
+            #    print(f"Translated line (italien): {translations['it']}")
                 
             current_line = []  # Reset for the next line
 
 
+# translation function
+#def translate_texts(text, target_languages=['it', 'fr', 'es']):
+#    translator = Translator()
+#    translations = {}
+#    for lang in target_languages:
+#        try:
+#            translation = translator.translate(text, dest=lang)
+#            translations[lang] = translation.text
+#        except Exception as e:
+#            print(f"Translation error for {lang}: {e}")
+#            translations[lang] = None
+#    return translations
 
+# data processing function
+def process_data(data):
+    processed_lines = []
+    pattern = r"\.$|!$|\?$"  # Matches sentences ending with '.', '!', or '?'
+    Pdatas = data.splitlines()  
+    for Pdata in Pdatas:
+        match = re.search(pattern, Pdata)
+        if match is None:
+            Pdata = Pdata + "."
+        processed_lines.append(Pdata)
+    return "\n".join(processed_lines)
+        
 
-
-
-# Fonction pour traduire vers plusieurs langues
-def translate_texts(text, target_languages=['it', 'fr', 'es']):
-    translator = Translator()
-    translations = {}
-    for lang in target_languages:
-        try:
-            translation = translator.translate(text, dest=lang)
-            translations[lang] = translation.text
-        except Exception as e:
-            print(f"Translation error for {lang}: {e}")
-            translations[lang] = None
-    return translations
-
-
+        
 
 
 # Main function
