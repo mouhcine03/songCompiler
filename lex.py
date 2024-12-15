@@ -4,13 +4,13 @@ import ply.yacc as yacc
 import json
 import os 
 import re
-
+import tkinter as tk
 
 #-----------------------------constants-----------------------------
 #Rihab
-path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
-#Mohcine
 #path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
+#Mohcine
+path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #dictionary
 dataDic = {
     "lexical_error": [],
@@ -24,11 +24,6 @@ dataTemplate = {
         "Line":""
    
 }
-
-
-
-#data = """one lord, one heart.
-#"""  
 
 
 #error log
@@ -108,38 +103,39 @@ def t_error(t):
     error_message = f"Illegal character '{t.value[0]}' at line {t.lineno}"
     errorLog("lexical", error_message, t.lineno, t.lexpos)
     writeJson(dataDic)
-    raise Exception(f"ERROR: '{error_message}'")
     t.lexer.skip(1)
+    raise Exception(error_message)
 
 # Newline handling to track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+
 # Lexical analysis function
 def lexicalAnalysis():
-    print("-----------------------------Lexical analysis-----------------------------")
-    lexer = lex.lex()  # Create the lexer
-    print("Please enter the lyrics you have in mind: ")
-    lines = []
-    while True:
-        line = input()  # Read one line at a time
-        if line == "":  # Stop input when the user enters an empty line
-            break
-        lines.append(line)
-    data = "\n".join(lines)
-    data = process_data(data)
-    lexer.input(data.lower())
-    tokens_list = []
-    try:
+    try :
+        print("-----------------------------Lexical analysis-----------------------------")
+        lexer = lex.lex()  # Create the lexer
+        try:
+            text = textbox.get("1.0", "end-1c")  # Get text from the Text widget
+        except tk.TclError as e:
+            print(f"Error accessing Text widget: {e}")
+            labelRLEX.config(text="\nError: Unable to access the text widget.")
+            return
+        data = process_data(text)
+        lexer.input(data.lower())
+        tokens_list = []
         for tok in lexer:
             tokens_list.append(tok)
-            print(f"Token: {tok.type}, Value: {tok.value}")
-        return tokens_list  # Return the list of tokens
     except Exception as e:
-        print(f"{e}")
+        print(f'{e}')
+        labelRLEX.config(text=labelRLEX.cget("text")+ str(e))
+        lines = labelRLEX.cget("text").split("\n")
+        labelRSYN.config(height=len(lines))
         return None
-
+    process_lines(tokens_list)
+    
 # Grammar rule for "S" (sentence)
 def p_S(p):
     '''
@@ -221,8 +217,10 @@ def p_S(p):
     elif p[1] == ("let's","join","together") and p[2] == "(" and p[3] == "let's" and p[4] == "pray" and p[5] == ('to', ('the', 'lord')) and p[6] == ")":
         pass
     else:
-        error_message = f"Semantic error S: check out the structure of your phrase."
-        print(f"{error_message}")
+        error_message = f"Semantic error S: check out the structure of your phrase."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -246,8 +244,10 @@ def p_ADVP(p):
     elif p[1] == 'there' and p[2] == "ain't" and p[3] == 'no' and p[4] == "hiding" and p[5] == "place":
         p[0] = (p[1],p[2],p[3],p[4],p[5])
     else :
-        error_message = f"Semantic error ADVP: please check the structure of your phrase."
-        print(f'{error_message}')
+        error_message = f"Semantic error ADVP: please check the structure of your phrase."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -305,8 +305,10 @@ def p_VP(p):
     elif p[1] == "let's" and p[2] == "all" and p[3] == "pray":
         p[0] = (p[1],p[2],p[3])
     else:
-        error_message = f"Semantic error VP: check out the structure of your phrase please."
-        print(f'{error_message}')
+        error_message = f"Semantic error VP: check out the structure of your phrase please."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -330,8 +332,10 @@ def p_NP(p):
     elif p[1] == "no" and p[2] == "doom":
         p [0] = ("no","doom")
     else:
-        error_message = f"Semantic error NP: check out the structure of your phrase please."
-        print(f'{error_message}')
+        error_message = f"Semantic error NP: check out the structure of your phrase please."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -363,8 +367,10 @@ def p_PP(p):
     elif p[1] == 'at' and p[2] == ("this","house") and p[3] == "a" and p[4] == "pray":
         p[0] = (p[1],p[2],p[3],p[4])
     else:
-        error_message = f"Semantic error PP: check out the structure of your phrase please."
-        print(f'{error_message}')
+        error_message = f"Semantic error PP: check out the structure of your phrase please."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 def p_CP(p):
@@ -381,8 +387,10 @@ def p_CP(p):
     elif p[1] == "so" and p[2] == "when":
         p[0] = (p[1],p[2])
     else:
-        error_message = f"Semantic error CP: did you mean and feel alright."
-        print(f'{error_message}')
+        error_message = f"Semantic error CP: did you mean and feel alright."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -404,8 +412,10 @@ def p_ADJP(p):
     elif p[1] == "this" and p[2] == "holy" and p[3] == "battle" :
         p[0] = (p[1],p[2],p[3])
     else:
-        error_message = f"Semantic error ADJP: check out the structure of your phrase please."
-        print(f'{error_message}')
+        error_message = f"Semantic error ADJP: check out the structure of your phrase please."+"\n"
+        labelRSEM.config(text=labelRSEM.cget("text") + error_message)
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
         errorLog("semantic", error_message)
         writeJson(dataDic)
 
@@ -435,9 +445,15 @@ def process_lines(tokens_list):
             print(f"\nProcessing line: {raw_input}")
             try:
                 parser.parse(raw_input)
-                print(f"Successfully processed line: {raw_input}")
+                message = f"Successfully processed line: {raw_input}\n"
+                labelRSYN.config(text=labelRSYN.cget("text") + message)
+                lines = labelRSYN.cget("text").split("\n")
+                labelRSYN.config(height=len(lines))
             except Exception as e:
-                print(f"Syntax error: {e}")
+                error_message = f"Syntax error: {e}\n"
+                labelRSYN.config(text=labelRSYN.cget("text") + error_message)
+                lines = labelRSYN.cget("text").split("\n")
+                labelRSYN.config(height=len(lines))
 
              #Traduction du texte après les analyses
             translations = translate_texts(raw_input)
@@ -473,8 +489,54 @@ def process_data(data):
             Pdata = Pdata + "."
         processed_lines.append(Pdata)
     return "\n".join(processed_lines)
-        
-
-        
 
 
+# Define the window close handler
+def on_close():
+    print("Window is closing... cleaning up!")
+    window.destroy()
+
+window = tk.Tk()
+window.geometry("900x900")
+window.title("one love - Bob Marley")
+window.protocol("WM_DELETE_WINDOW", on_close)
+
+label = tk.Label(window, text="Welcome to the compiler made for the Bob Marley song - one love"+"\n"+"made by ANANOUCH Mouad, EL HASNAOUI Mohcine, GHAILAN Taha and SEMMAR Rihab",font={'Ariel',13})
+label1 = tk.Label(window, text="Enter the desired lyric:",font={'Ariel',10})
+textbox = tk.Text(window, height=3, width=50, font=("Arial", 10))
+button = tk.Button(window, text="analysis",font=('Ariel',10),command=lexicalAnalysis)
+labelLEX = tk.Label(window,text="Lexical Analysis Result:",font=('Ariel',13))
+labelRLEX = tk.Label(window)
+labelSYN = tk.Label(window,text="Syntactic Analysis Result:",font=('Ariel',13))
+labelRSYN = tk.Label(window)
+labelSEM = tk.Label(window,text="Semantic Analysis Result:",font=('Ariel',13))
+labelRSEM = tk.Label(window)
+
+#placing on the window
+label.place(x=50,y=60)
+label1.place(x=50,y=120)
+textbox.place(x=50,y=150)
+button.place(x=50,y=220)
+labelLEX.place(x=50,y=260)
+labelRLEX.place(x=50,y=280)
+labelSYN.place(x=50,y=320)
+labelRSYN.place(x=50,y=340)
+labelSEM.place(x=50,y=440)
+labelRSEM.place(x=50,y=460)
+window.mainloop()
+
+
+# Main function
+def main():
+    tokens_list = lexicalAnalysis()  # Perform lexical analysis
+    if tokens_list:
+        print("\n-----------------------------Syntactic analysis-----------------------------")
+        process_lines(tokens_list)  # Process the tokens line by line
+    else:
+        print("Error in lexical analysis. Syntactic analysis will not be performed.")
+    
+    
+
+# Entry point
+if __name__ == "__main__":
+    main()
