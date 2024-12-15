@@ -2,365 +2,77 @@
     "lexical_error": [
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 14,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 14,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 15,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 14,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 15,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 16,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 14,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 15,
             "Line": 1
         },
         {
             "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
-            "Line": 1
-        },
-        {
-            "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
-            "Line": 1
-        },
-        {
-            "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
-            "Line": 1
-        },
-        {
-            "Type": "lexical",
-            "Description": "Illegal character 'd' at line 1",
-            "Position": 4,
-            "Line": 1
-        },
-        {
-            "Type": "lexical",
-            "Description": "Illegal character 'l' at line 1",
-            "Position": 4,
+            "Description": "Illegal character 'g' at line 1\n",
+            "Position": 16,
             "Line": 1
         }
     ],
     "syntactic_error": [
         {
             "Type": "syntactic",
-            "Description": "Syntax error at token 'PUNCTUATION' with value '.'",
-            "Position": 11,
+            "Description": "Syntax error at token 'ADJECTIVES' with value 'mercy'",
+            "Position": 15,
             "Line": 1
         }
     ],
     "semantic_error": [
         {
             "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
+            "Description": "Semantic error S: check out the structure of your phrase.\n",
             "Position": null,
             "Line": null
         },
         {
             "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together ( at this house i pray ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together ( at this house i pray ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'and feel alright ( and i will feel alright ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together ( at this house i pray ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love , one heart .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together and feel alright .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one love ( oh lord of mercy ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'one heart ( i tell you ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'let's join together ( at this house i pray ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Not found : 'and feel alright ( and i will feel alright ) .' does not align with the song's lyrics",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Semantic error S: check out the structure of your phrase.",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Semantic error ADVP: please check the structure of your phrase.",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Semantic error ADVP: please check the structure of your phrase.",
-            "Position": null,
-            "Line": null
-        },
-        {
-            "Type": "semantic",
-            "Description": "Semantic error S: check out the structure of your phrase.",
+            "Description": "Semantic error S: check out the structure of your phrase.\n",
             "Position": null,
             "Line": null
         }

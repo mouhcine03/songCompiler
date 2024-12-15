@@ -5,12 +5,15 @@ import json
 import os 
 import re
 import tkinter as tk
+import difflib
+from lyrics import song_lyrics
+
 
 #-----------------------------constants-----------------------------
 #Rihab
-#path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
+path = r'C:\Users\DELL\Desktop\S7\compilation\songCompiler\errorLog.json'
 #Mohcine
-path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
+#path = r'C:\Users\HP\Documents\compilation\projetCompilation\errorLog.json'
 #dictionary
 dataDic = {
     "lexical_error": [],
@@ -24,7 +27,7 @@ dataTemplate = {
         "Line":""
    
 }
-
+done = True
 
 #error log
 #creating a json file :
@@ -59,9 +62,9 @@ def errorLog(error_type, description, line=None, position=None):
 
     if error_type == "lexical":
         dataDic["lexical_error"].append(errorEntry)
-    elif error_type == "syntaxique":
+    elif error_type == "syntactic":
         dataDic["syntactic_error"].append(errorEntry)
-    elif error_type == "semantique":
+    elif error_type == "semantic":
         dataDic["semantic_error"].append(errorEntry)
 
 
@@ -100,19 +103,23 @@ t_RPAREN = r"\)"
 
 # Error handling for illegal characters
 def t_error(t):
-    error_message = f"Illegal character '{t.value[0]}' at line {t.lineno}"
+    error_message = f"Illegal character '{t.value[0]}' at line {t.lineno}"+"\n"
+    print(error_message)
+    labelRLEX.config(text=labelRLEX.cget("text") + error_message)
+    lines = labelRLEX.cget("text").split("\n")
+    labelRLEX.config(height=len(lines))
     errorLog("lexical", error_message, t.lineno, t.lexpos)
     writeJson(dataDic)
     t.lexer.skip(1)
-    raise Exception(error_message)
+    done = False
+
+
+
 
 # Newline handling to track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-
-
-
 
     
 # Grammar rule for "S" (sentence)
@@ -413,10 +420,6 @@ def p_error(p):
         writeJson(dataDic)
         raise Exception(error_message)
 
-
-
-
-
 # translation function
 def translate_texts(text, target_languages=['it', 'fr', 'es']):
     translator = Translator()
@@ -444,7 +447,7 @@ def process_data(data):
 
 # Lexical analysis function
 def lexicalAnalysis():
-    try:
+    
         print("-----------------------------Lexical analysis-----------------------------")
         lexer = lex.lex()  # Create the lexer
 
@@ -461,25 +464,22 @@ def lexicalAnalysis():
         lexer.input(data.lower())
         tokens_list = []
 
-        # Collecte des tokens
+        
+            # Collect tokens and handle lexical errors
         for tok in lexer:
             tokens_list.append(tok)
             print(tok)
+        if (done):
+            msg = "Lexical analysis completed successfully!"
+            labelRLEX.config(text=labelRLEX.cget("text") + msg)
+            lines = labelRLEX.cget("text").split("\n")
+            labelRLEX.config(height=len(lines))
+            print("")
+            synthaxique_analyse(tokens_list)
+        else:
+            return None
         
-
-        # Si aucun problème ne survient, afficher un message de réussite
-        labelRLEX.config(text="Lexical analysis completed successfully!")
-        print("Lexical analysis completed successfully!")
-
-        # Appel à la fonction pour traiter les tokens
-        synthaxique_analyse(tokens_list)
-
-    except Exception as e:
-        # En cas d'erreur, afficher le message d'erreur et ne pas afficher le message de réussite
-        print(f"Error during lexical analysis: {e}")
-        labelRLEX.config(text=f"Error during lexical analysis: {e}")
-        lines = labelRLEX.cget("text").split("\n")
-        labelRSYN.config(height=len(lines))
+        
 
 def process_lines(tokens_list):
     """Processes tokens and returns a list of raw input strings for syntactic analysis."""
@@ -503,6 +503,13 @@ def process_lines(tokens_list):
     
     return raw_inputs  # Retourner toutes les phrases traitées
 
+def suggest_lyric(user_input):
+    # Use difflib to find the closest match
+    closest_match = difflib.get_close_matches(user_input, song_lyrics, n=1, cutoff=0.6)
+    if closest_match:
+        return closest_match[0]  # Return the closest matching lyric
+    else:
+        return None
 
 def synthaxique_analyse(tokens_list):
     """Performs syntactic analysis on the tokens."""
@@ -529,7 +536,7 @@ def synthaxique_analyse(tokens_list):
             labelRSYN.config(height=len(lines))
             
             # Success message for semantic analysis
-            success_message2 = f"Sementic analysis successfully performed for: {raw_input}\n"
+            success_message2 = f"Sementic analysis performed for: {raw_input}\n"
             labelRSEM.config(text=labelRSEM.cget("text") + success_message2)
             lines = labelRSEM.cget("text").split("\n")
             labelRSEM.config(height=len(lines))
@@ -539,20 +546,22 @@ def synthaxique_analyse(tokens_list):
             if translations:
                 translation_msg = "\n".join([f"{lang.upper()}: {text}" for lang, text in translations.items() if text])
                 all_translations.append(translation_msg)  # Accumulate translations for all sentences
-        
         except Exception as e:
             # Display the error message if there is a syntax issue
-            error_message = f"Syntactic error in sentence '{raw_input}': {e}\n"
-            labelRSYN.config(text=labelRSYN.cget("text") + error_message)
+            error_message = f"{e} at the sentence {raw_input}"
+            error_message = error_message +" did you mean: "+ suggest_lyric(raw_input)
+            labelRSYN.config(text=labelRSYN.cget("text") + error_message+"\n")
             lines = labelRSYN.cget("text").split("\n")
             labelRSYN.config(height=len(lines))
     
     # Once all sentences are processed, update the translation label
     if all_translations:
-        translation_label.config(text=labelRSEM.cget("text") + "\nTranslations:\n" + "\n\n".join(all_translations))
-        lines = labelRSEM.cget("text").split("\n")
-        labelRSEM.config(height=len(lines))
+        translation_label.config(text="\n".join(all_translations))
+        lines = translation_label.cget("text").split("\n")
+        translation_label.config(height=len(lines))
 
+
+    
 
 
 # Define the window close handler
@@ -584,9 +593,8 @@ labelRLEX = tk.Label(window)
 labelSYN = tk.Label(window,text="Syntactic Analysis Result:",font=('Ariel',13))
 labelRSYN = tk.Label(window)
 labelSEM = tk.Label(window,text="Semantic Analysis Result:",font=('Ariel',13))
-
 labelRSEM = tk.Label(window)
-
+labelT = tk.Label(window,text="Translation:",font=('Ariel',13))
 clear_button = tk.Button(window, text="Clear", font=('Ariel', 10), command=clear_fields)
 clear_button.place(x=150, y=220)
 
@@ -596,15 +604,17 @@ label1.place(x=50,y=120)
 textbox.place(x=50,y=150)
 button.place(x=50,y=220)
 labelLEX.place(x=50,y=260)
-labelRLEX.place(x=50,y=280)
-labelSYN.place(x=50,y=320)
-labelRSYN.place(x=50,y=340)
-labelSEM.place(x=50,y=440)
-labelRSEM.place(x=50,y=460)
-translation_label = tk.Label(text="", justify=tk.LEFT)
-translation_label.pack()
-translation_label.place(x=80,y=500)
+labelRLEX.place(x=50,y=280)#280
 
+labelSYN.place(x=50,y=480)#320
+labelRSYN.place(x=50,y=500)#340
+labelSEM.place(x=50,y=700)#440
+labelRSEM.place(x=50,y=720)#460
+
+translation_label = tk.Label(window, text="", justify=tk.LEFT)
+translation_label.pack()
+labelT.place(x=650,y=255)
+translation_label.place(x=650,y=275)
 window.mainloop()
 
 
