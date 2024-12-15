@@ -64,9 +64,9 @@ def errorLog(error_type, description, line=None, position=None):
 
     if error_type == "lexical":
         dataDic["lexical_error"].append(errorEntry)
-    elif error_type == "syntactic":
+    elif error_type == "syntaxique":
         dataDic["syntactic_error"].append(errorEntry)
-    elif error_type == "semantic":
+    elif error_type == "semantique":
         dataDic["semantic_error"].append(errorEntry)
 
 
@@ -440,27 +440,27 @@ def process_lines(tokens_list):
                 print(f"Syntax error: {e}")
 
              #Traduction du texte après les analyses
-            #translations = translate_texts(raw_input)
-            #if translations:
-            #    print(f"Translated line (French): {translations['fr']}")
-            #    print(f"Translated line (Spanish): {translations['es']}")
-            #    print(f"Translated line (italien): {translations['it']}")
+            translations = translate_texts(raw_input)
+            if translations:
+                print(f"Translated line (French): {translations['fr']}")
+                print(f"Translated line (Spanish): {translations['es']}")
+                print(f"Translated line (italien): {translations['it']}")
                 
             current_line = []  # Reset for the next line
 
 
 # translation function
-#def translate_texts(text, target_languages=['it', 'fr', 'es']):
-#    translator = Translator()
-#    translations = {}
-#    for lang in target_languages:
-#        try:
-#            translation = translator.translate(text, dest=lang)
-#            translations[lang] = translation.text
-#        except Exception as e:
-#            print(f"Translation error for {lang}: {e}")
-#            translations[lang] = None
-#    return translations
+def translate_texts(text, target_languages=['it', 'fr', 'es']):
+    translator = Translator()
+    translations = {}
+    for lang in target_languages:
+        try:
+            translation = translator.translate(text, dest=lang)
+            translations[lang] = translation.text
+        except Exception as e:
+            print(f"Translation error for {lang}: {e}")
+            translations[lang] = None
+    return translations
 
 # data processing function
 def process_data(data):
@@ -478,17 +478,3 @@ def process_data(data):
         
 
 
-# Main function
-def main():
-    tokens_list = lexicalAnalysis()  # Perform lexical analysis
-    if tokens_list:
-        print("\n-----------------------------Syntactic analysis-----------------------------")
-        process_lines(tokens_list)  # Process the tokens line by line
-    else:
-        print("Error in lexical analysis. Syntactic analysis will not be performed.")
-    
-    
-
-# Entry point
-if __name__ == "__main__":
-    main()

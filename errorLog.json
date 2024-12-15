@@ -1,6 +1,13 @@
 {
     "lexical_error": [],
-    "syntactic_error": [],
+    "syntactic_error": [
+        {
+            "Type": "syntactic",
+            "Description": "Syntax error at token 'PUNCTUATION' with value '.'",
+            "Position": 11,
+            "Line": 1
+        }
+    ],
     "semantic_error": [
         {
             "Type": "semantic",
@@ -251,6 +258,30 @@
         {
             "Type": "semantic",
             "Description": "Not found : 'and feel alright ( and i will feel alright ) .' does not align with the song's lyrics",
+            "Position": null,
+            "Line": null
+        },
+        {
+            "Type": "semantic",
+            "Description": "Semantic error S: check out the structure of your phrase.",
+            "Position": null,
+            "Line": null
+        },
+        {
+            "Type": "semantic",
+            "Description": "Semantic error ADVP: please check the structure of your phrase.",
+            "Position": null,
+            "Line": null
+        },
+        {
+            "Type": "semantic",
+            "Description": "Semantic error ADVP: please check the structure of your phrase.",
+            "Position": null,
+            "Line": null
+        },
+        {
+            "Type": "semantic",
+            "Description": "Semantic error S: check out the structure of your phrase.",
             "Position": null,
             "Line": null
         }
