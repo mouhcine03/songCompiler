@@ -1,5 +1,84 @@
 {
-    "lexical_error": [],
+    "lexical_error": [
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'd' at line 1",
+            "Position": 4,
+            "Line": 1
+        },
+        {
+            "Type": "lexical",
+            "Description": "Illegal character 'l' at line 1",
+            "Position": 4,
+            "Line": 1
+        }
+    ],
     "syntactic_error": [
         {
             "Type": "syntactic",

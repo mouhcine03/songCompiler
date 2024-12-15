@@ -112,29 +112,8 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 
-# Lexical analysis function
-def lexicalAnalysis():
-    try :
-        print("-----------------------------Lexical analysis-----------------------------")
-        lexer = lex.lex()  # Create the lexer
-        try:
-            text = textbox.get("1.0", "end-1c")  # Get text from the Text widget
-        except tk.TclError as e:
-            print(f"Error accessing Text widget: {e}")
-            labelRLEX.config(text="\nError: Unable to access the text widget.")
-            return
-        data = process_data(text)
-        lexer.input(data.lower())
-        tokens_list = []
-        for tok in lexer:
-            tokens_list.append(tok)
-    except Exception as e:
-        print(f'{e}')
-        labelRLEX.config(text=labelRLEX.cget("text")+ str(e))
-        lines = labelRLEX.cget("text").split("\n")
-        labelRSYN.config(height=len(lines))
-        return None
-    process_lines(tokens_list)
+
+
     
 # Grammar rule for "S" (sentence)
 def p_S(p):
@@ -434,35 +413,8 @@ def p_error(p):
         writeJson(dataDic)
         raise Exception(error_message)
 
-def process_lines(tokens_list):
-    parser = yacc.yacc()  # Create the parser
-    current_line = []
 
-    for tok in tokens_list:
-        current_line.append(tok.value)
-        if tok.type == 'PUNCTUATION' and tok.value in ['.', '!', '?']:
-            raw_input = " ".join(current_line)
-            print(f"\nProcessing line: {raw_input}")
-            try:
-                parser.parse(raw_input)
-                message = f"Successfully processed line: {raw_input}\n"
-                labelRSYN.config(text=labelRSYN.cget("text") + message)
-                lines = labelRSYN.cget("text").split("\n")
-                labelRSYN.config(height=len(lines))
-            except Exception as e:
-                error_message = f"Syntax error: {e}\n"
-                labelRSYN.config(text=labelRSYN.cget("text") + error_message)
-                lines = labelRSYN.cget("text").split("\n")
-                labelRSYN.config(height=len(lines))
 
-             #Traduction du texte après les analyses
-            translations = translate_texts(raw_input)
-            if translations:
-                print(f"Translated line (French): {translations['fr']}")
-                print(f"Translated line (Spanish): {translations['es']}")
-                print(f"Translated line (italien): {translations['it']}")
-                
-            current_line = []  # Reset for the next line
 
 
 # translation function
@@ -490,11 +442,133 @@ def process_data(data):
         processed_lines.append(Pdata)
     return "\n".join(processed_lines)
 
+# Lexical analysis function
+def lexicalAnalysis():
+    try:
+        print("-----------------------------Lexical analysis-----------------------------")
+        lexer = lex.lex()  # Create the lexer
+
+        # Récupération du texte depuis le widget Text
+        try:
+            text = textbox.get("1.0", "end-1c")
+        except tk.TclError as e:
+            print(f"Error accessing Text widget: {e}")
+            labelRLEX.config(text="\nError: Unable to access the text widget.")
+            return
+
+        # Traitement des données pour l'analyse
+        data = process_data(text)
+        lexer.input(data.lower())
+        tokens_list = []
+
+        # Collecte des tokens
+        for tok in lexer:
+            tokens_list.append(tok)
+            print(tok)
+        
+
+        # Si aucun problème ne survient, afficher un message de réussite
+        labelRLEX.config(text="Lexical analysis completed successfully!")
+        print("Lexical analysis completed successfully!")
+
+        # Appel à la fonction pour traiter les tokens
+        synthaxique_analyse(tokens_list)
+
+    except Exception as e:
+        # En cas d'erreur, afficher le message d'erreur et ne pas afficher le message de réussite
+        print(f"Error during lexical analysis: {e}")
+        labelRLEX.config(text=f"Error during lexical analysis: {e}")
+        lines = labelRLEX.cget("text").split("\n")
+        labelRSYN.config(height=len(lines))
+
+def process_lines(tokens_list):
+    """Processes tokens and returns a list of raw input strings for syntactic analysis."""
+    current_line = []
+    raw_inputs = []  # Liste pour stocker toutes les phrases traitées
+    
+    for tok in tokens_list:
+        current_line.append(tok.value)
+        
+        # Vérifier si le token est une ponctuation de fin de phrase
+        if tok.type == 'PUNCTUATION' and tok.value in ['.', '!', '?']:
+            # Construire une phrase complète à partir des tokens collectés
+            raw_input = " ".join(current_line)
+            print(f"\nProcessing line: {raw_input}")  # Afficher la phrase pour debug
+            raw_inputs.append(raw_input)  # Ajouter la phrase à la liste
+            current_line = []  # Réinitialiser la ligne pour la prochaine phrase
+    
+    # Si la liste des phrases est vide, retourner None
+    if not raw_inputs:
+        return None
+    
+    return raw_inputs  # Retourner toutes les phrases traitées
+
+
+def synthaxique_analyse(tokens_list):
+    """Performs syntactic analysis on the tokens."""
+    # Get the processed lines from process_lines
+    raw_inputs = process_lines(tokens_list)
+    
+    if raw_inputs is None:
+        print("No valid sentence found.")
+        return
+    
+    parser = yacc.yacc()  # Create the parser
+    all_translations = []  # List to accumulate all translations
+    
+    # Iterate through each sentence in raw_inputs
+    for raw_input in raw_inputs:
+        try:
+            # Parse the sentence
+            parser.parse(raw_input)
+            
+            # Success message after syntactic analysis
+            success_message1 = f"Syntaxic analysis successfully performed for: {raw_input}\n"
+            labelRSYN.config(text=labelRSYN.cget("text") + success_message1)
+            lines = labelRSYN.cget("text").split("\n")
+            labelRSYN.config(height=len(lines))
+            
+            # Success message for semantic analysis
+            success_message2 = f"Sementic analysis successfully performed for: {raw_input}\n"
+            labelRSEM.config(text=labelRSEM.cget("text") + success_message2)
+            lines = labelRSEM.cget("text").split("\n")
+            labelRSEM.config(height=len(lines))
+            
+            # Translate the success messages
+            translations = translate_texts(raw_input)
+            if translations:
+                translation_msg = "\n".join([f"{lang.upper()}: {text}" for lang, text in translations.items() if text])
+                all_translations.append(translation_msg)  # Accumulate translations for all sentences
+        
+        except Exception as e:
+            # Display the error message if there is a syntax issue
+            error_message = f"Syntactic error in sentence '{raw_input}': {e}\n"
+            labelRSYN.config(text=labelRSYN.cget("text") + error_message)
+            lines = labelRSYN.cget("text").split("\n")
+            labelRSYN.config(height=len(lines))
+    
+    # Once all sentences are processed, update the translation label
+    if all_translations:
+        translation_label.config(text=labelRSEM.cget("text") + "\nTranslations:\n" + "\n\n".join(all_translations))
+        lines = labelRSEM.cget("text").split("\n")
+        labelRSEM.config(height=len(lines))
+
+
 
 # Define the window close handler
 def on_close():
     print("Window is closing... cleaning up!")
     window.destroy()
+
+def clear_fields():
+    """Function to clear all fields."""
+    textbox.delete("1.0", tk.END)  # Clear the input text box
+    labelRLEX.config(text="")  # Clear lexical analysis result
+    labelRSYN.config(text="")  # Clear syntactic analysis result
+    labelRSEM.config(text="")  # Clear semantic analysis result
+    translation_label.config(text="")  # Clear translation results
+    labelRSYN.config(height=1)
+    labelRSEM.config(height=1)
 
 window = tk.Tk()
 window.geometry("900x900")
@@ -510,7 +584,11 @@ labelRLEX = tk.Label(window)
 labelSYN = tk.Label(window,text="Syntactic Analysis Result:",font=('Ariel',13))
 labelRSYN = tk.Label(window)
 labelSEM = tk.Label(window,text="Semantic Analysis Result:",font=('Ariel',13))
+
 labelRSEM = tk.Label(window)
+
+clear_button = tk.Button(window, text="Clear", font=('Ariel', 10), command=clear_fields)
+clear_button.place(x=150, y=220)
 
 #placing on the window
 label.place(x=50,y=60)
@@ -523,14 +601,17 @@ labelSYN.place(x=50,y=320)
 labelRSYN.place(x=50,y=340)
 labelSEM.place(x=50,y=440)
 labelRSEM.place(x=50,y=460)
+translation_label = tk.Label(text="", justify=tk.LEFT)
+translation_label.pack()
+translation_label.place(x=80,y=500)
+
 window.mainloop()
+
 
 
 #Main function
 def main():
     
-    
-
- #Entry point 
+# Point d'entrée principal
  if __name__ == "__main__":
     main()
